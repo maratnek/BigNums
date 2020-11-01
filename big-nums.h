@@ -4,6 +4,8 @@
 
 // input data 2 big num
 // need add, diff, multiple
+// the sign for the number is ignored
+
 using std::string;
 using TNumber = int;
 using TVInt = std::vector<TNumber>;
@@ -27,6 +29,8 @@ public:
     BigNumber operator*(const BigNumber &bn) const;
     // BigNumber operator/(const BigNumber &_v) const;
     // BigNumber operator%(const BigNumber &_v) const;
+    bool operator==(const BigNumber &bn) const;
+    bool operator!=(const BigNumber &bn) const;
     ~BigNumber() {}
 };
 
@@ -37,7 +41,6 @@ BigNumber::BigNumber(const string &s)
 
 void BigNumber::str_to_vec(TVInt &v, const string &s)
 {
-    // v.resize(s.size());
     for (auto it = s.rbegin(); it != s.rend(); ++it)
     {
         char c = *it;
@@ -110,19 +113,26 @@ BigNumber BigNumber::operator*(const BigNumber &r_bn) const
         {
             TNumber t_num = (j < this->v.size() ? this->v[j] : 0) * ((i-j) < r_bn.v.size() ? r_bn.v[i - j] : 0);
             t[i] += t_num;
-
-            // cout << "calc i=" << i << " j=" << j << " =" << t_num << " t[i] = " << t[i] << " v1=" << v1[j] << " v2=" << v2[i-j] << endl; 
         }
         t[i] += t_mem[i];
         t_mem[i + 1] = t[i] / 10;
         t[i] = t[i] % 10;
-
-        // cout << "finish: " << t[i] << " t_mem = " << t_mem[i+1] << " " << endl;
     }
-    // for (; i < t_mem.size(); ++i) {
-    //     cout << "t_mem " << t_mem[i] << endl; 
-    // }
-    // cout << t.size() << endl;
-
     return BigNumber(t);
+}
+
+bool BigNumber::operator==(const BigNumber &bn) const {
+    if (v.size() != bn.v.size())
+        return false;
+    for (size_t i = 0; i < v.size(); ++i)
+    {
+        if (v[i] != bn.v[i])
+            return false;
+    }
+    
+    return true;
+}
+
+bool BigNumber::operator!=(const BigNumber &bn) const {
+    return !(*this == bn); 
 }
