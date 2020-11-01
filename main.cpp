@@ -5,6 +5,9 @@
 
 #include "big-nums.h"
 
+// for test
+#include <assert.h>
+
 using namespace std;
 
 // input data 2 big num
@@ -12,8 +15,47 @@ using namespace std;
 using TNumber = int;
 using TVInt = vector<TNumber>;
 
-int main() {
+void test_sum()
+{
+    cout << "Add test " << endl;
+    string str1 = "12345";
+    string str2 = "22222222";
+    BigNumber bn1(str1);
+    BigNumber bn2(str2);
+    BigNumber etalon("22234567");
+    BigNumber bn = bn1 + bn2;
+    cout << "Add test " << (etalon == bn ? "Success" : "Fail") << endl;
+}
+
+void test_diff()
+{
+    string str1 = "12345";
+    string str2 = "22222222";
+    BigNumber bn1(str1);
+    BigNumber bn2(str2);
+    cout << "Diff test " << endl;
+    BigNumber bn = bn1 - bn2;
+    BigNumber etalon("22209877");
+    cout << "Diff test " << (etalon == bn ? "Success" : "Fail") << endl;
+}
+
+void test_multiple()
+{
+    cout << "Multiple test " << endl;
+    string str = string("999999");
+    BigNumber bnm1(str);
+    BigNumber bnm2(str);
+    BigNumber bn = bnm1 * bnm2;
+    BigNumber etalon("999998000001");
+    cout << "Multiple test " << (etalon == bn ? "Success" : "Fail") << endl;
+}
+
+int main()
+{
     // todo aggrement that input data is correct
+    test_sum();
+    test_diff();
+    test_multiple();
     fstream file("input.txt");
     if (file.is_open())
     {
@@ -30,33 +72,12 @@ int main() {
             cout << "bn11 == bn22" << endl;
         else
             cout << "bn11 != bn22" << endl;
-
-        string str1 = "12345";
-        string str2 = "22222222";
-        BigNumber bn1(str1);
-        bn1.show();
-        BigNumber bn2(str2);
-        bn2.show();
-        cout << "Add test " << endl;
-        BigNumber bn = bn1 + bn2;
-        bn.show();
-        cout << "Diff test " << endl;
-        bn = bn1 - bn2;
-        bn.show();
-        cout << 12345 - 22222222 << endl;
-        cout <<  22222222 - 12345 << endl;
-        cout << "Multiple test " << endl;
-        BigNumber bnm1("999999");
-        BigNumber bnm2("999999");
-        BigNumber bn_assert("999998000001");
-        bn =  bnm1 * bnm2;
-        cout << " assert : " << (bn_assert == bn? "true": "false") << endl;
-        cout << "BigN: ";
+        BigNumber bn = bn11 + bn22;
         bn.show();
 
-        cout <<"Real: " << (long)999999 * (long)999999 << endl;
         file.close();
     }
-    else cout << "Unable to open input.txt file. Please create";
+    else
+        cout << "Unable to open input.txt file. Please create";
     return 0;
 }

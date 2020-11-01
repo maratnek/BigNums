@@ -36,15 +36,16 @@ public:
 
 BigNumber::BigNumber(const string &s)
 {
-    this->str_to_vec(v, s);
+    this->str_to_vec(this->v, s);
 }
 
 void BigNumber::str_to_vec(TVInt &v, const string &s)
 {
     for (auto it = s.rbegin(); it != s.rend(); ++it)
     {
-        char c = *it;
-        v.push_back(atoi(&c));
+        char c = it[0];
+        TNumber t = atoi(&c);
+        v.push_back(t);
     }
 }
 
@@ -91,7 +92,7 @@ BigNumber BigNumber::operator-(const BigNumber &r_bn) const
                 mem = 0;
             }
         }
-        std::cout << t.size() << std::endl;
+        // std::cout << t.size() << std::endl;
     };
 
     if (this->v.size() > r_bn.v.size())
